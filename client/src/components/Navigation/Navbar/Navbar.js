@@ -12,6 +12,9 @@ const navbar = (props) => (
                     exact
                     activeClassName="active" >Strona główna</NavLink> </li>
                 <li><NavLink to={{
+                    pathname: '/dodawanie-tankowania',
+                }}>Dodaj tankowanie</NavLink></li>
+                <li><NavLink to={{
                     pathname: '/logowanie',
                 }}>Logowanie</NavLink></li>
             </ul>

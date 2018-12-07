@@ -5,7 +5,7 @@ import Input from '../../components/UI/Input/Input';
 
 import axios from '../../axios-orders';
 
-import './Dodawanie.css';
+import classes from './Dodawanie.css';
 
 class Dodawanie extends Component {
 
@@ -106,7 +106,7 @@ class Dodawanie extends Component {
             </form>
         );
         return (
-            <div className="Dodawanie">
+            <div className={classes.Dodawanie}>
                 <h4>Enter your Contact Data</h4>
                 {form}
             </div>

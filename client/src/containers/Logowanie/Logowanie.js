@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import './Logowanie.css';
+import classes from './Logowanie.css';
 
 class Logowanie extends Component {
     render() {
         return (
-            <div className="login-page">
-                <div className="form">
+            <div className={classes.Login_page} >
+                <div className={classes.Form}>
                     <form className="login-form">
                         <input type="text" placeholder="e-mail"/>
                         <input type="password" placeholder="hasło"/>

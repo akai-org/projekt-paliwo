@@ -1,9 +1,9 @@
 import React from 'react';
 
-import './Footer.css';
+import classes from './Footer.css';
 
 const navbar = (props) => (
-    <footer className="Footer">
+    <footer className={classes.Footer}>
         <p>Aplikacja Paliwo 2018</p>
     </footer>
 );

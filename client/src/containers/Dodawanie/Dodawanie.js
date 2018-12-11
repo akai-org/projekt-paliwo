@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 
-import axios from '../../axios-orders';
+import axios from '../../axios-refills';
 
 import classes from './Dodawanie.css';
 

@@ -5,10 +5,31 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+
+import authReducer from './store/reducers/auth';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
+
+const rootReducer = combineReducers({
+    auth: authReducer
+});
+
+/* REDUX store */
+const store = createStore(
+    rootReducer, composeEnhancers(
+        applyMiddleware(thunk)
+    )
+);
+
 const app = (
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

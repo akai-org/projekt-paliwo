@@ -17,6 +17,9 @@ const navbar = (props) => (
                 <li><NavLink to={{
                     pathname: '/logowanie',
                 }}>Logowanie</NavLink></li>
+                <li><NavLink to={{
+                    pathname: '/rejestracja',
+                }}>Rejestracja</NavLink></li>
             </ul>
         </nav>
     </header>

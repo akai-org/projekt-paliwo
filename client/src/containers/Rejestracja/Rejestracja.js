@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
 import classes from './Rejestracja.css';
 
 import { updateObject, checkValidity } from "../../shared/utility";
@@ -78,19 +80,47 @@ class Rejestracja extends Component {
         this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUp)
     };
 
-    switchAuthModeHandler = () => {
-        this.setState(prevState => {
-            return {isSignUp: !prevState.isSignUp};
-        })
-    };
-
     render() {
+        const formElementsArray = [];
+        for (let key in this.state.controls) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.controls[key]
+            })
+        }
+        let form = formElementsArray.map(formElement => (
+            <Input
+                key={formElement.id}
+                elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                value={formElement.config.value}
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched}
+                errorMessage={formElement.config.errorMessage}
+                changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+        ));
+
+        let errorMessage = null;
+
+        if (this.props.error) {
+            errorMessage = (
+                <p>{this.props.error.message}</p>
+            )
+        }
+
+        let authRedirect = null;
+        if (this.props.isAuthentitacted) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        }
+
         return (
-            <div className={classes.Rejestracja} >
-                <form className={classes.Form}>
-                    <input type="text" placeholder="e-mail"/>
-                    <input type="password" placeholder="hasło"/>
-                    <button>Rejestruj się</button>
+            <div className={classes.Auth}>
+                {errorMessage}
+                {authRedirect}
+                <form onSubmit={this.submitHandler}>
+                    {form}
+                    <Button btnType="Success">Submit</Button>
                 </form>
             </div>
         )

@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 
-import axios from '../../axios-refills';
-
 import classes from './Dodawanie.css';
+
+import * as actions from '../../store/actions/index';
 
 class Dodawanie extends Component {
 
     state = {
         refillForm: {
-            name: {
+            ilosc: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
@@ -29,7 +30,7 @@ class Dodawanie extends Component {
         formIsValid: false
     };
 
-    orderHandler = (event) => {
+    refillHandler = (event) => {
         event.preventDefault();
         const formData = {};
         for (let formElementIdentifier in this.state.refillForm) {
@@ -38,10 +39,7 @@ class Dodawanie extends Component {
         const refill = {
             refillData: formData
         };
-        axios.post('/takonwania.json', refill)
-            .then(response => {
-                this.props.history.push('/');
-            })
+        this.props.onSubmit(refill)
     };
 
     checkValidity(value, rules) {
@@ -77,19 +75,19 @@ class Dodawanie extends Component {
         for (let inputIdentifier in updatedRefillForm) {
             formIsValid = updatedRefillForm[inputIdentifier].valid && formIsValid;
         }
-        this.setState({orderForm: updatedRefillForm, formIsValid: formIsValid});
+        this.setState({refillForm: updatedRefillForm, formIsValid: formIsValid});
     };
 
     render () {
         const formElementsArray = [];
-        for (let key in this.state.orderForm) {
+        for (let key in this.state.refillForm) {
             formElementsArray.push({
                 id: key,
                 config: this.state.refillForm[key]
             })
         }
         let form = (
-            <form onSubmit={this.orderHandler}>
+            <form onSubmit={this.refillHandler}>
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}
@@ -102,7 +100,7 @@ class Dodawanie extends Component {
                         errorMessage={formElement.config.errorMessage}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success" disabled={!this.state.formIsValid}>Order</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>Dodaj tankowanie</Button>
             </form>
         );
         return (
@@ -114,4 +112,10 @@ class Dodawanie extends Component {
     }
 }
 
-export default Dodawanie;
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubmit: (refill) => dispatch(actions.createRefill(refill))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(Dodawanie);

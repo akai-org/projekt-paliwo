@@ -6,3 +6,4 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
 export const REFILL_CREATE = 'REFILL_CREATE';
+export const REFILL_ERROR = 'REFILL_ERROR';

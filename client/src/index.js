@@ -8,19 +8,26 @@ import registerServiceWorker from './registerServiceWorker';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { reduxFirestore, getFirestore } from 'redux-firestore';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import firebaseConfig from './config/firebase_config';
 
 import authReducer from './store/reducers/auth';
+import refillReducer from './store/reducers/refill';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    refill: refillReducer
 });
 
 /* REDUX store */
 const store = createStore(
     rootReducer, composeEnhancers(
-        applyMiddleware(thunk)
+        applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+        reduxFirestore(firebaseConfig),
+        reactReduxFirebase(firebaseConfig)
     )
 );
 

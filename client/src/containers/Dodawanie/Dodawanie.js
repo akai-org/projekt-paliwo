@@ -12,11 +12,68 @@ class Dodawanie extends Component {
 
     state = {
         refillForm: {
+            data: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Wybierz datę i godzinę tankowania'
+                },
+                errorMessage: 'Wprowadź właściwą datę',
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            rodzaj: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'pb98', displayValue: 'PB98 (paliwo bezołowiowe 98 oktanów)'},
+                        {value: 'pb95', displayValue: 'PB95 (paliwo bezołowiowe 95 oktanów)'},
+                        {value: 'no', displayValue: 'NO (olej napędowy - diesel)'},
+                        {value: 'no-eko', displayValue: 'NO-Eko (ekodiesel)'},
+                        {value: 'lpg', displayValue: 'LPG (autogaz)'}
+                    ]
+                },
+                value: 'fastest',
+                validation: {},
+                valid: true
+            },
+            cena: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Cena za 1 litr'
+                },
+                errorMessage: 'Wprowadź właściwą cenę',
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
             ilosc: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'Ilość zatankowanego paliwa'
+                },
+                errorMessage: 'Wprowadź własciwe liczbę',
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            licznik: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Przebieg pojazdu w momencie tankowania'
                 },
                 errorMessage: 'Wprowadź własciwe liczbę',
                 value: '',
@@ -105,7 +162,7 @@ class Dodawanie extends Component {
         );
         return (
             <div className={classes.Dodawanie}>
-                <h4>Enter your Contact Data</h4>
+                <h4>Formularz dodawania tankowań</h4>
                 {form}
             </div>
         )

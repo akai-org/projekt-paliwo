@@ -171,7 +171,7 @@ class Dodawanie extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSubmit: (refill) => dispatch(actions.createRefill(refill))
+        onSubmit: (refill) => dispatch(actions.sendRefill(refill))
     }
 };
 

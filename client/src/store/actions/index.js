@@ -6,5 +6,7 @@ export {
 } from './auth';
 
 export {
-    createRefill
+    sendRefill,
+    sendInit,
+    fetchRefills
 } from './refill';

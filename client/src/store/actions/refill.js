@@ -22,10 +22,10 @@ export const sendRefillStart = () => {
     }
 };
 
-export const sendRefill = (refillData) => {
+export const sendRefill = (token, refillData) => {
     return dispatch => {
         dispatch(sendRefillStart());
-        axios.post('/tankowania.json', refillData)
+        axios.post('/tankowania.json?auth=' + token, refillData)
             .then(response => {
                 dispatch(sendRefillSuccess(response.data.name, refillData));
             })
@@ -61,11 +61,11 @@ export const fetchRefillsStart = () => {
     }
 };
 
-export const fetchRefills = () => {
+export const fetchRefills = (token, userId) => {
     return dispatch => {
         dispatch(fetchRefillsStart());
-        //const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
-        axios.get('/tankowania.json')
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+        axios.get('/tankowania.json' + queryParams)
             .then(res => {
                 const fetchedRefills = [];
                 for (let key in res.data) {

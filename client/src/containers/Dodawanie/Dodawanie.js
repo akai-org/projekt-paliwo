@@ -37,7 +37,7 @@ class Dodawanie extends Component {
                         {value: 'lpg', displayValue: 'LPG (autogaz)'}
                     ]
                 },
-                value: 'fastest',
+                value: '',
                 validation: {},
                 valid: true
             },
@@ -94,9 +94,10 @@ class Dodawanie extends Component {
             formData[formElementIdentifier] = this.state.refillForm[formElementIdentifier].value;
         }
         const refill = {
-            refillData: formData
+            refillData: formData,
+            userId: this.props.userId
         };
-        this.props.onSubmit(refill)
+        this.props.onSubmit(this.props.token, refill);
     };
 
     checkValidity(value, rules) {
@@ -169,10 +170,17 @@ class Dodawanie extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        onSubmit: (refill) => dispatch(actions.sendRefill(refill))
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
-export default connect(null, mapDispatchToProps)(Dodawanie);
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubmit: (token, refill) => dispatch(actions.sendRefill(token, refill))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dodawanie);

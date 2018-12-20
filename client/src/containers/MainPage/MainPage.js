@@ -1,31 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Refill from '../../components/Refill/Refill';
-import classes from './Paliwo.css';
-
-import * as actions from '../../store/actions/index';
-
-class Tankowania extends Component {
-
-    componentDidMount() {
-        this.props.onFetchRefills();
-    }
+class MainPage extends Component {
 
     render () {
-        let refills = null;
-        if (!this.props.loading) {
-            refills = this.props.refills.map(refill => (
-                <Refill
-                    cena={refill.refillData.cena}
-                    data={refill.refillData.data}
-                    ilosc={refill.refillData.ilosc}/>
-            ));
-        }
 
         return (
-            <div className={classes.Paliwo}>
-                {refills}
+            <div>
+                <p>Strona główna</p>
+                <p><b>Twoje ID:</b> {this.props.userId}</p>
             </div>
         );
     }
@@ -33,15 +16,8 @@ class Tankowania extends Component {
 
 const mapStateToProps = state => {
     return {
-        refills: state.refill.refills,
-        loading: state.refill.loading
+        userId: state.auth.userId,
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFetchRefills: () => dispatch(actions.fetchRefills())
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tankowania);
+export default connect(mapStateToProps)(MainPage);

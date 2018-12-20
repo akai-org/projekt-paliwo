@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Navbar from '../../components/Navigation/Navbar/Navbar';
 import Footer from '../../components/Navigation/Footer/Footer';
@@ -11,7 +12,7 @@ class Layout extends Component {
     render () {
         return (
             <Auxi>
-                <Navbar/>
+                <Navbar isAuthentitacted={this.props.isAuthentitacted} />
                 <main className={classes.Content}>
                     {this.props.children}
                 </main>
@@ -22,4 +23,10 @@ class Layout extends Component {
 
 }
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthentitacted: state.auth.token !== null
+    }
+};
+
+export default connect(mapStateToProps)(Layout);

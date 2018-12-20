@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Refill from '../../components/Refill/Refill';
-import classes from './Paliwo.css';
+import classes from './Tankowania.css';
 
 import * as actions from '../../store/actions/index';
 
-class Paliwo extends Component {
+class Tankowania extends Component {
 
     componentDidMount() {
-        this.props.onFetchRefills();
+        this.props.onFetchRefills(this.props.token, this.props.userId);
     }
 
     render () {
@@ -24,7 +24,7 @@ class Paliwo extends Component {
         }
 
         return (
-            <div className={classes.Paliwo}>
+            <div className={classes.Tankowania}>
                 {refills}
             </div>
         );
@@ -34,14 +34,16 @@ class Paliwo extends Component {
 const mapStateToProps = state => {
     return {
         refills: state.refill.refills,
-        loading: state.refill.loading
+        loading: state.refill.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchRefills: () => dispatch(actions.fetchRefills())
+        onFetchRefills: (token, userId) => dispatch(actions.fetchRefills(token, userId))
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Paliwo);
+export default connect(mapStateToProps, mapDispatchToProps)(Tankowania);

@@ -4,12 +4,12 @@ import { Redirect } from 'react-router-dom';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import classes from './Rejestracja.css';
+import classes from './Autoryzacja.css';
 
 import { updateObject, checkValidity } from "../../shared/utility";
 import * as actions from '../../store/actions/index';
 
-class Rejestracja extends Component {
+class Autoryzacja extends Component {
 
     state = {
         controls: {
@@ -44,11 +44,11 @@ class Rejestracja extends Component {
                 touched: false
             },
         },
-        isSignUp: true
+        isSignUp: false
     };
 
     componentDidMount() {
-        if (!this.props.buildingBurger && this.props.authRedirectPath) {
+        if (this.props.authRedirectPath) {
             this.props.onSetAuthRedirectPath();
         }
     }
@@ -61,17 +61,6 @@ class Rejestracja extends Component {
                 touched: true
             })
         });
-        /*const updatedFormElement = {
-            ...updatedControls[inputIdentifier]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
-        let formIsValid = true;
-        for (let inputIdentifier in updatedOrderForm) {
-            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-        }*/
         this.setState({controls: updatedControls});
     };
 
@@ -118,6 +107,12 @@ class Rejestracja extends Component {
             <div className={classes.Auth}>
                 {errorMessage}
                 {authRedirect}
+                <h3>Logowanie</h3>
+                <form onSubmit={this.submitHandler}>
+                    {form}
+                    <Button btnType="Success">Submit</Button>
+                </form>
+                <h3>Rejestracja</h3>
                 <form onSubmit={this.submitHandler}>
                     {form}
                     <Button btnType="Success">Submit</Button>
@@ -143,4 +138,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rejestracja);
+export default connect(mapStateToProps, mapDispatchToProps)(Autoryzacja);

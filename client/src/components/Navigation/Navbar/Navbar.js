@@ -1,25 +1,19 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import classes from './Navbar.css';
+
+import NavItem from './NavItem/Navtem';
 
 const navbar = (props) => (
     <header>
         <nav className={classes.Navbar}>
             <ul>
-                <li><NavLink
-                    to="/"
-                    exact
-                    activeClassName="active" >Strona główna</NavLink> </li>
-                <li><NavLink to={{
-                    pathname: '/dodawanie-tankowania',
-                }}>Dodaj tankowanie</NavLink></li>
-                <li><NavLink to={{
-                    pathname: '/logowanie',
-                }}>Logowanie</NavLink></li>
-                <li><NavLink to={{
-                    pathname: '/rejestracja',
-                }}>Rejestracja</NavLink></li>
+                <NavItem link='/'>Strona główna</NavItem>
+                { props.isAuthentitacted ? <NavItem link='/tankowania'>Tankowania</NavItem> : null }
+                { props.isAuthentitacted ? <NavItem link='/dodaj-tankowanie'>Dodaj tankowanie</NavItem> : null }
+                { props.isAuthentitacted
+                    ? <NavItem link='/wylogowanie'>Wyloguj się</NavItem>
+                    : <NavItem link='/autoryzacja'>Logowanie/Rejestracja</NavItem> }
             </ul>
         </nav>
     </header>

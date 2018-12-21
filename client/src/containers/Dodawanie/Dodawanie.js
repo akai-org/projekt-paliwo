@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from "react-router-dom";
 
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 
 import classes from './Dodawanie.css';
-
 import * as actions from '../../store/actions/index';
 
 class Dodawanie extends Component {
 
     state = {
         refillForm: {
+            time: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'time',
+                    placeholder: 'Wybierz godzinę tankowania'
+                },
+                errorMessage: 'Wprowadź właściwą godzinę',
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
             data: {
                 elementType: 'input',
                 elementConfig: {
-                    type: 'text',
-                    placeholder: 'Wybierz datę i godzinę tankowania'
+                    type: 'date',
+                    placeholder: 'Wybierz datę tankowania'
                 },
                 errorMessage: 'Wprowadź właściwą datę',
                 value: '',
@@ -161,8 +175,15 @@ class Dodawanie extends Component {
                 <Button btnType="Success" disabled={!this.state.formIsValid}>Dodaj tankowanie</Button>
             </form>
         );
+
+        let refillRedirect = null;
+        if (this.props.refillRedirect) {
+            refillRedirect = <Redirect to={this.props.refillRedirectPath} />
+        }
+
         return (
             <div className={classes.Dodawanie}>
+                {refillRedirect}
                 <h4>Formularz dodawania tankowań</h4>
                 {form}
             </div>
@@ -173,7 +194,9 @@ class Dodawanie extends Component {
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        refillRedirect: state.refill.refillRedirect,
+        refillRedirectPath: state.refill.refillRedirectPath
     }
 };
 

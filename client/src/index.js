@@ -16,7 +16,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    refill: refillReducer,
+    refill: refillReducer
 });
 
 /* REDUX store */

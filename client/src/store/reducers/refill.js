@@ -4,7 +4,9 @@ import { updateObject } from "../../shared/utility";
 const initialState = {
     refills: [],
     loading: false,
-    allowSend: false
+    allowSend: false,
+    refillRedirect: false,
+    refillRedirectPath: '/tankowania'
 };
 
 const reducer = (state = initialState, action) => {
@@ -15,14 +17,16 @@ const reducer = (state = initialState, action) => {
             });
         case actionTypes.SEND_REFILL_START:
             return updateObject(state, {
-                loading: true
+                loading: true,
+                refillRedirect: true
             });
         case actionTypes.SEND_REFILL_SUCCESS:
             const newRefill = updateObject(action.refillData, { id: action.refillId });
             return updateObject(state,{
                 loading: false,
                 allowSend: true,
-                refills: state.refills.concat(newRefill)
+                refills: state.refills.concat(newRefill),
+                refillRedirect: false
             });
         case actionTypes.SEND_REFILL_FAIL:
             return updateObject(state, { loading: false });

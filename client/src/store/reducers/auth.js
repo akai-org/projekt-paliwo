@@ -6,6 +6,7 @@ const initialState = {
     userId: null,
     error: null,
     loading: false,
+    users: [],
     authRedirectPath: '/'
 };
 
@@ -29,6 +30,22 @@ const authFail = (state, action) => {
     })
 };
 
+const registerSuccess = (state, action) => {
+    const newUser = updateObject(action.userData, { id: action.userId });
+    return updateObject(state,{
+        loading: false,
+        allowSend: true,
+        users: state.users.concat(newUser)
+    });
+};
+
+const registerFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false
+    })
+};
+
 const authLogout = (state, action) => {
     return updateObject(state, {token: null, userId: null})
 };
@@ -39,6 +56,8 @@ const setAuthRedirectPath = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.SEND_REGISTER_SUCCESS: return registerSuccess(state, action);
+        case actionTypes.SEND_REGISTER_FAIL: return registerFail(state, action);
         case actionTypes.AUTH_START: return authStart(state, action);
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
         case actionTypes.AUTH_FAIL: return authFail(state, action);

@@ -1,5 +1,6 @@
 export {
     auth,
+    register,
     logout,
     setAuthRedirectPath,
     authCheckState

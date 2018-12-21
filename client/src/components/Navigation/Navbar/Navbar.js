@@ -11,9 +11,8 @@ const navbar = (props) => (
                 <NavItem link='/'>Strona główna</NavItem>
                 { props.isAuthentitacted ? <NavItem link='/tankowania'>Tankowania</NavItem> : null }
                 { props.isAuthentitacted ? <NavItem link='/dodaj-tankowanie'>Dodaj tankowanie</NavItem> : null }
-                { props.isAuthentitacted
-                    ? <NavItem link='/wylogowanie'>Wyloguj się</NavItem>
-                    : <NavItem link='/autoryzacja'>Logowanie/Rejestracja</NavItem> }
+                { props.isAuthentitacted ? <NavItem link='/wylogowanie'>Wyloguj się</NavItem> : <NavItem link='/autoryzacja'>Logowanie</NavItem> }
+                { props.isAuthentitacted ? null : <NavItem link='/rejestracja'>Rejestracja</NavItem> }
             </ul>
         </nav>
     </header>

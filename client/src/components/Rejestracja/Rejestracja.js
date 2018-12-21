@@ -4,12 +4,11 @@ import { Redirect } from 'react-router-dom';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import classes from './Autoryzacja.css';
 
 import { updateObject, checkValidity } from "../../shared/utility";
 import * as actions from '../../store/actions/index';
 
-class Autoryzacja extends Component {
+class Rejestracja extends Component {
 
     state = {
         controls: {
@@ -43,8 +42,35 @@ class Autoryzacja extends Component {
                 valid: false,
                 touched: false
             },
-        },
-        isSignUp: false
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your name'
+                },
+                //errorMessage: 'Wprowadź właściwego maila',
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            surname: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your surname'
+                },
+                //errorMessage: 'Wprowadź właściwego maila',
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+        }
     };
 
     componentDidMount() {
@@ -64,9 +90,17 @@ class Autoryzacja extends Component {
         this.setState({controls: updatedControls});
     };
 
-    submitHandler = (event) => {
+    userHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value)
+        const formData = {};
+        for (let formElementIdentifier in this.state.controls) {
+            formData[formElementIdentifier] = this.state.controls[formElementIdentifier].value;
+        }
+        const user = {
+            userData: formData,
+            userId: this.props.userId
+        };
+        this.props.onRegister(this.state.controls.email.value, this.state.controls.password.value, user);
     };
 
     render() {
@@ -104,11 +138,11 @@ class Autoryzacja extends Component {
         }
 
         return (
-            <div className={classes.Auth}>
+            <div>
                 {errorMessage}
                 {authRedirect}
-                <h3>Logowanie</h3>
-                <form onSubmit={this.submitHandler}>
+                <h3>Rejestracja</h3>
+                <form onSubmit={this.userHandler}>
                     {form}
                     <Button btnType="Success">Submit</Button>
                 </form>
@@ -121,6 +155,8 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
+        token: state.auth.token,
+        userId: state.auth.userId,
         isAuthentitacted: state.auth.token !== null,
         authRedirectPath: state.auth.authRedirectPath
     }
@@ -128,9 +164,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password)),
+        onRegister: (email, password, userData) => dispatch(actions.register(email, password, userData)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Autoryzacja);
+export default connect(mapStateToProps, mapDispatchToProps)(Rejestracja);

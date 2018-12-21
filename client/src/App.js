@@ -5,7 +5,7 @@ import { Route, Switch, withRouter, Redirect  } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 
 import Autoryzacja from './containers/Autoryzacja/Autoryzacja';
-import Rejestracja from './components/Rejestracja/Rejestracja';
+import Rejestracja from './containers/Rejestracja/Rejestracja';
 import Logout from './containers/Autoryzacja/Logout/Logout';
 import Dodawanie from './containers/Dodawanie/Dodawanie';
 import Tankowania from './containers/Tankowania/Tankowania';

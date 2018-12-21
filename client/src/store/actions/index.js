@@ -11,3 +11,7 @@ export {
     sendInit,
     fetchRefills
 } from './refill';
+
+export {
+    fetchUsers
+} from './user';

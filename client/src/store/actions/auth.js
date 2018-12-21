@@ -83,7 +83,11 @@ export const register = (email, password, userData) => {
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userId', response.data.localId);
-                dispatch(sendUserData(response.data.idToken, userData));
+                let userDataId = {
+                    ...userData,
+                    userId: response.data.localId
+                };
+                dispatch(sendUserData(response.data.idToken, userDataId));
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
             })

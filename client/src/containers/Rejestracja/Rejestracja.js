@@ -6,7 +6,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
 import { updateObject, checkValidity } from "../../shared/utility";
-import * as actions from '../../store/actions/index';
+import * as actions from '../../store/actions';
 
 class Rejestracja extends Component {
 
@@ -70,7 +70,8 @@ class Rejestracja extends Component {
                 valid: false,
                 touched: false
             },
-        }
+        },
+        userId: 'asdf'
     };
 
     componentDidMount() {
@@ -97,8 +98,7 @@ class Rejestracja extends Component {
             formData[formElementIdentifier] = this.state.controls[formElementIdentifier].value;
         }
         const user = {
-            userData: formData,
-            userId: this.props.userId
+            userData: formData
         };
         this.props.onRegister(this.state.controls.email.value, this.state.controls.password.value, user);
     };
